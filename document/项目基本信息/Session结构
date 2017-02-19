@@ -1,0 +1,15 @@
+SESSION设计结构：
+admin
+|--admin_id
+|--admin_nickname
+|--admin_group
+|--admin_power
+	|--各个权限位
+	|--...
+user(类似admin)
+
+other
+|-__component_messageBar_message 跳转信息
+|-__component_messageBar_satus 状态（true/false）
+|-nowModule 记录当前模块（Manage System Tenement）
+|-nowSecondModule	记录当前子模块

@@ -1,0 +1,89 @@
+<div id="sLog_index">
+    <div class="col-sm-12">
+        <nav class="pull-right">
+            <ul class="pagination">
+                <li>
+                    <a ng-click="selectPage.getLastData()"
+                       ng-if="selectPage.lastCache.length>0" aria-label="Previous">
+                        <span class="glyphicon glyphicon-chevron-left"  aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li>
+                    <a  ng-click="selectPage.getNextData()" aria-label="Next"
+                        ng-if="selectPage.nextCache.length>0">
+                        <span class="glyphicon glyphicon-chevron-right"  aria-hidden="true"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <h2>记录列表</h2>
+    </div>
+    <div class="col-sm-12">
+
+
+        <form class="form-inline">
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    日志等级:{{keywordLevelMap[selectPage.limit["level"]]}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a
+                            ng-click="selectPage.changeLimit('level',null)">全部等级</a>
+                    </li>
+                    <li ng-repeat="level in levelData">
+                        <a ng-click="selectPage.changeLimit('level',level.level_id)">{{level.level_id}}</a>
+                    </li>
+
+                </ul>
+            </div>
+
+
+            <label class=" pull-right">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-click="selectPage.toggleSort()" ng-checked="selectPage.limit.desc"> 倒序
+                    </label>
+                </div>
+            </label>
+        </form>
+        <br>
+
+
+        <table class="table table-striped" class="table table-hover" >
+            <thead class="container">
+            <tr class="container">
+                <th><span class="glyphicon glyphicon-tag">  ID</span></th>
+                <th><span class="glyphicon glyphicon-folder-open">  日志介绍</span></th>
+                <th><span class="glyphicon glyphicon-align-right">  日志等级</span></th>
+                <th><span class="glyphicon glyphicon-map-marker">  日志类型</span></th>
+                <th><span class="glyphicon glyphicon-wrench">  操作</span></th>
+            </tr>
+            </thead>
+            <tbody class="container">
+            <tr class="container" ng-repeat="log in selectPage.data">
+                <td class="container">{{log.ID}}</td>
+                <td class="container">{{log.intro}}</td>
+                <td class="container">{{log.level}}</td>
+                <td class="container">{{log.type}}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" type="button" ng-click="goDetail(log._id.$id)">详情</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav>
+        当前第 {{ selectPage.page.nowPage }} 页 | 总计 {{ selectPage.page.totalPage }} 页
+        <ul class="pager">
+            <li><a ng-if="selectPage.page.nowPage>1"
+                   href="" ng-click="selectPage.previousPage()">前一页</a></li>
+
+            <li><a ng-if="selectPage.page.nowPage<selectPage.page.totalPage"
+                   href="" ng-click="selectPage.nextPage()">下一页</a></li>
+        </ul>
+    </nav>
+
+</div>

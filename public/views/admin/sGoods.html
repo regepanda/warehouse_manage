@@ -1,0 +1,192 @@
+<div id="sPayment_index">
+    <div class="col-sm-12">
+        <nav class="pull-right">
+            <ul class="pagination">
+                <li>
+                    <a ng-click="selectPage.getLastData()"
+                       ng-if="selectPage.lastCache.length>0" aria-label="Previous">
+                        <span class="glyphicon glyphicon-chevron-left"  aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li>
+                    <a  ng-click="selectPage.getNextData()" aria-label="Next"
+                        ng-if="selectPage.nextCache.length>0">
+                        <span class="glyphicon glyphicon-chevron-right"  aria-hidden="true"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <h2>查看货物</h2>
+        </div>
+
+    <div class="col-sm-12">
+
+      <form class="form-inline">
+
+        <div class="btn-group">
+            <button class="btn  btn-success"  data-toggle="modal" data-target="#aAdmin" type="button">添加货物</button>
+        </div>
+        &nbsp;
+        &nbsp;
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle"
+                    aria-haspopup="true" aria-expanded="false" ng-click="selectPage.getData()">确定搜索
+            </button>
+            &nbsp;
+            <input type="text" ng-model="selectPage.limit.goods_ID" class="form-control" id="exampleInputEmail2" placeholder="请输入货物ID">
+        </div>
+
+
+        <label class=" pull-right">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-click="selectPage.toggleSort()" ng-checked="selectPage.limit.desc"> 倒序
+                </label>
+            </div>
+        </label>
+
+    </form>
+
+
+    <div class="modal fade" id="aAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" >添加货物</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>货物rfid</h4>
+                    <input type="text "  class="form-control" ng-model="goods_rfid" placeholder="goods rfid">
+
+                    <h4>货物二维码</h4>
+                    <input type="text"  class="form-control"  ng-model="goods_two_dimension" placeholder="goods two dimension">
+
+                    <h4>货物条形码</h4>
+                    <input type="text"  class="form-control"  ng-model="goods_bar_code" placeholder="goods bar code">
+
+                    <h4>绑定商品（请输入相应商品的ID）</h4>
+                    <input type="text"  class="form-control"  ng-model="goods_commodity" placeholder="commodity id">
+
+
+                    <h4>货物状态</h4>
+                    <select class="form-control" ng-model="goods_status"  name="class"  ng-options="single.id as single.name for single in goodsStatus">
+                    </select>
+
+                    <h4>货物区域</h4>
+                    <select class="form-control" ng-model="goods_area"  ng-options="single._id.$id as single.no for single in goodsArea">
+                    </select>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-primary" type="submit" data-dismiss="modal" ng-click="addGoods()">提交</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <br/>
+
+
+
+    <table class="table table-hover table-bordered">
+
+        <tr class="container">
+            <th><span class="glyphicon glyphicon-tag"> 货物ID</span></th>
+            <th><span class="glyphicon glyphicon-tag"> 绑定商品ID</span></th>
+            <th><span class="glyphicon glyphicon-leaf"> 绑定商品名</span></th>
+            <th><span class="glyphicon glyphicon-off">  货物状态</span></th>
+            <th><span class="glyphicon glyphicon-cog">  操作</span></th>
+        </tr>
+        <tr class="container" ng-repeat="single in selectPage.data">
+            <td class="container">{{single.ID}}</td>
+            <td class="container">{{single.commodity.$id}}</td>
+            <td class="container">{{single.commodity_name}}</td>
+            <td class="container">{{keywordStatusMap[single.status]}}</td>
+            <td class="container"><!-- Button trigger modal -->
+
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#upd_{{single._id.$id}}"><span class="glyphicon glyphicon-edit">修改</span></button>
+
+                <div class="modal fade" id="upd_{{single._id.$id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">当前货物ID：{{single.ID}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h4>请输入新的货物rfid</h4>
+                                <input class="form-control" ng-model="single.rfid_key" id="{{single._id.$id}}_rfid">
+
+                                <h4>请输入新的货物二维码</h4>
+                                <input class="form-control" ng-model="single.two_dimension_key" id="{{single._id.$id}}_two_dimension">
+
+                                <h4>请输入新的货物条形码</h4>
+                                <input class="form-control" ng-model="single.bar_code_key" id="{{single._id.$id}}_bar_code">
+
+                                <h4>请输入新的货物绑定的商品ID</h4>
+                                <input class="form-control" ng-model="single.commodity.$id" id="{{single._id.$id}}_commodity">
+
+                                <h4>请选择新的货物状态</h4>
+                                <select class="form-control" ng-model="single.status"  name="class" id="{{single._id.$id}}_status" ng-options="single.id as single.name for single in goodsStatus">
+                                </select>
+
+                                <h4>请选择新的货物区域  </h4>
+                                <select class="form-control" ng-model="single.area.$id"  name="class" id="{{single._id.$id}}_area" ng-options="single._id.$id as single.no for single in goodsArea">
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button  class="btn btn-danger btn-sm" type="submit" ng-click="updateGoods(single._id.$id)">提交</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#del_{{single._id.$id}}"><span class="glyphicon glyphicon-trash">删除</span></button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="del_{{single._id.$id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">警告！</h4>
+                            </div>
+                            <div class="modal-body">
+                                将要删除该货物！
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-sm" ng-click="deleteGoods(single._id.$id)">删除</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div></td>
+        </tr>
+
+    </table>
+
+    <nav>
+        当前第 {{ selectPage.page.nowPage }} 页 | 总计 {{ selectPage.page.totalPage }} 页
+        <ul class="pager">
+            <li><a ng-if="selectPage.page.nowPage>1"
+                   href="" ng-click="selectPage.previousPage()">前一页</a></li>
+
+            <li><a ng-if="selectPage.page.nowPage<selectPage.page.totalPage"
+                   href="" ng-click="selectPage.nextPage()">下一页</a></li>
+        </ul>
+    </nav>
+
+</div>
+
+</div>
+
+
+
+
+
+
+

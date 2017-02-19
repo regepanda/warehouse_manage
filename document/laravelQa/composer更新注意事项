@@ -1,0 +1,6 @@
+从git上提取的这个项目composer依赖已经加载好了。如果需要加载新的类，按照如下步骤：
+比如你需要在新建一个文件夹my_class存放基类，
+1.添加,"MyClass\\":"my_class/"   到  composer.json autoload psr-4 中，MyClass是你这一套组件的基础命名空间，my_class是你的文件夹
+2.在项目根目录使用composer install，composer将自动加载信息写入自动加载文件中
+3.composer update 更新依赖
+

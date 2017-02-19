@@ -1,0 +1,167 @@
+<div id="sRequest_index">
+    <div class="col-sm-7">
+        <h2>待处理货物  |
+            <button class="btn  btn-success"  data-toggle="modal" data-target="#aCommunity" type="button" ng-click="goodsAutoIn()" ng-if="goodsAutoInStatus==false">开启自动入库</button>
+            <button class="btn  btn-danger"  data-toggle="modal" data-target="#aCommunity" type="button" ng-click="goodsAutoIn()" ng-if="goodsAutoInStatus==true">关闭自动入库</button>
+            |
+            <button class="btn  btn-success"  data-toggle="modal" data-target="#aCommunity" type="button" ng-click="goodsAutoOut()" ng-if="goodsAutoOutStatus==false">开启自动出库</button>
+            <button class="btn  btn-danger"  data-toggle="modal" data-target="#aCommunity" type="button" ng-click="goodsAutoOut()" ng-if="goodsAutoOutStatus==true">关闭自动出库</button>
+            |
+            <button class="btn  btn-danger" type="button" ng-click="endSession()">关闭会话</button>
+
+        </h2>
+        <table class="table table-striped" class="table table-hover" >
+            <thead class="container">
+            <tr class="container">
+                <th><span class="glyphicon glyphicon-tag">  ID</span></th>
+                <th><span class="glyphicon glyphicon-leaf">  货物名</span></th>
+                <th><span class="glyphicon glyphicon-usd">  价格</span></th>
+                <th><span class="glyphicon glyphicon-text-height">  型号</span></th>
+                <th><span class="glyphicon glyphicon-text-size">  类型</span></th>
+                <th><span class="glyphicon glyphicon-off">  状态</span></th>
+                <th><span class="glyphicon glyphicon-wrench">  操作</span></th>
+            </tr>
+            </thead>
+            <tbody class="container">
+            <tr class="container" ng-repeat="single in database">
+                <td class="container">{{single.goods_id}}</td>
+                <td class="container">{{single.commodity_name}}</td>
+                <td class="container">{{single.commodity_price}}</td>
+                <td class="container">{{single.commodity_model}}</td>
+                <td class="container">{{single.commodity_class}}</td>
+                <td class="container">{{keywordStatusMap[single.goods_status]}}</td>
+                <td >
+                    <button ng-if="single.goods_status == 0" class="btn  btn-success"  data-toggle="modal" data-target="#aCommunity" type="button" ng-click="uGoodsStatus(single.goods_id,1)">入库</button>
+                    <button ng-if="single.goods_status == 1" class="btn  btn-success"  data-toggle="modal" data-target="#aCommunity" type="button" ng-click="uGoodsStatus(single.goods_id,0)">出库</button>
+                    <button class="btn btn-danger" ng-click="cancelGoods(single.goods_id)">忽略</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="col-sm-5">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-body shadow_div">
+                    <h3 ng-if="operator.operator_image == null"> 此操作员暂无头像</h3>
+
+                    <div class="col-sm-4">
+                    <div ng-if="operator.operator_image != null" style="margin: 15px auto; width:70%;height:70%;float: left">
+                        <img src="/getImage/{{ operator.operator_image }}" class="img-circle" style="margin:auto ;width:100%;height:100%">
+                    </div>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <table class="table table-hover">
+                            <!--
+                            <tr>
+                                <td>
+                              <h4><B>操作员ID:</B></h4>
+                                </td>
+                                <td>
+                               <h4>{{operator.operator_id}}</h4>
+                                </td>
+                            </tr>
+                            -->
+                            <tr>
+                                <td>
+                                  <h4><B>操作员名:</B></h4>
+                                </td>
+                                <td >
+                                 <h4>{{operator.operator_name}}</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <h4><B>操作员用户名:</B></h4>
+                                </td>
+                                <td>
+                                 <h4>{{operator.operator_username}}</h4>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-12"  style=" overflow-y:auto;height:400px;">
+            <div class="panel panel-default">
+                <div class="panel-body shadow_div">
+                    <h4>操作记录：</h4>
+                    <table class="table table-hover">
+                        <tr ng-repeat="log in logData" class="active">
+                            <td ng-if="log.status == 1" class="info">{{log.time}}&nbsp&nbsp{{log.id.$id}}&nbsp&nbsp{{log.data}}</td>
+                            <td ng-if="log.status == 0" class="danger">{{log.time}}&nbsp&nbsp{{log.data}}</td>
+                            <br>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12"  style=" overflow-y:auto;height:500px;" ng-show="showCache">
+        <div class="panel panel-default">
+            <div class ="panel-body shadow_div">
+                <h4>缓存记录：| <button class="btn-default btn-sm btn" ng-click="commitCache()">提交</button></h4>
+                <hr>
+
+                <table class="table table-striped" class="table table-hover" >
+                    <thead class="container">
+                    <tr class="container">
+                        <th><span class="glyphicon glyphicon-tag">  ID</span></th>
+                        <th><span class="glyphicon glyphicon-leaf">  货物名</span></th>
+                        <th><span class="glyphicon glyphicon-leaf">  目标状态</span></th>
+                        <th><span class="glyphicon glyphicon-leaf">  型号</span></th>
+                        <th><span class="glyphicon glyphicon-leaf">  价格</span></th>
+                        <th><span class="glyphicon glyphicon-leaf">  目标区域</span></th>
+                        <th><span class="glyphicon glyphicon-leaf">  操作</span></th>
+                    </thead>
+                    <tbody class="container">
+                    <tr class="container" ng-repeat="single in operateCache">
+                        <td class="container">{{single.goods_id}}</td>
+                        <td class="container">{{single.commodity_name}}</td>
+                        <td class="container">{{single.aim_status==0?"出库":"入库"}}</td>
+                        <td class="container">{{single.model}}</td>
+                        <td class="container">{{single.price}}</td>
+                        <td class="container">{{single.area_detail}}</td>
+                        <td class="container">
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancel_cache_{{single.goods_id}}">撤销</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="cancel_cache_{{single.goods_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">撤销缓存</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>确认撤销缓存？</h3>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                            <button type="button" class="btn btn-primary" ng-click="delCache(single.goods_id)" data-dismiss="modal">确认</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

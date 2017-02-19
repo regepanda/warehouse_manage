@@ -1,0 +1,203 @@
+<div id="sPayment_index">
+    <div class="col-sm-12">
+        <nav class="pull-right">
+            <ul class="pagination">
+                <li>
+                    <a ng-click="selectPage.getLastData()"
+                       ng-if="selectPage.lastCache.length>0" aria-label="Previous">
+                        <span class="glyphicon glyphicon-chevron-left"  aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li>
+                    <a  ng-click="selectPage.getNextData()" aria-label="Next"
+                        ng-if="selectPage.nextCache.length>0">
+                        <span class="glyphicon glyphicon-chevron-right"  aria-hidden="true"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <h2>查看设备 | <button class="btn  btn-success"  data-toggle="modal" data-target="#aAdmin" type="button">添加设备</button></h2>
+        <div class="modal fade" id="aAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" >添加设备</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>设备名</h4>
+                        <input type="text "  class="form-control" ng-model="device_name" placeholder="device name">
+
+                        <h4>设备self_id(不能为空)</h4>
+                        <input type="text"  class="form-control"  ng-model="self_id" placeholder="self id">
+
+                        <h4>设备是否可控制</h4>
+                        <select class="form-control" ng-model="device_control"  ng-options="single.type as single.name for single in deviceControl">
+                        </select>
+
+                        <h4>设备类型</h4>
+                        <select class="form-control" ng-model="device_type"  ng-options="single.type as single.name for single in deviceTypes">
+                        </select>
+
+                        <h4>设备入口(可为空)</h4>
+                        <select class="form-control" ng-model="device_entrance"  ng-options="single._id.$id as single.name for single in deviceEntrances">
+                        </select>
+
+                        <h4>设备介绍</h4>
+                        <textarea class="form-control" rows="3"  ng-model="device_intro" placeholder="device intro"></textarea>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-primary" type="submit" data-dismiss="modal" ng-click="addDevice()">提交</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <table class="table table-hover table-bordered">
+
+        <tr class="container">
+            <th><span class="glyphicon glyphicon-tag">  ID</span></th>
+            <th><span class="glyphicon glyphicon-tag">  设备self_id</span></th>
+            <th><span class="glyphicon glyphicon-leaf">  设备名</span></th>
+            <th><span class="glyphicon glyphicon-tree-deciduous">  设备类型</span></th>
+            <th><span class="glyphicon glyphicon-off">  设备状态</span></th>
+            <th><span class="glyphicon glyphicon-folder-open">  设备介绍</span></th>
+            <th><span class="glyphicon glyphicon-cog">  操作</span></th>
+        </tr>
+        <tr class="container" ng-repeat="single in selectPage.data">
+            <td class="container">{{single.ID}}</td>
+            <td class="container">{{single.self_id}}</td>
+            <td class="container">{{single.name}}</td>
+            <td class="container">{{keywordDeviceTypeMap[single.type]}}</td>
+            <td class="container">{{keywordDeviceUseMap[single.use]}}</td>
+            <td class="container" ng-if="single.type != 2">{{single.intro}}</td>
+            <td class="container"><!-- Button trigger modal -->
+
+                <button ng-if="(single.use == 0 && single.type != 2)||single.type == 4" type="button" class="btn btn-primary btn-sm" ng-click="uDeviceUse(single._id.$id,single.use)"><span class="glyphicon glyphicon-off">开启</span></button>
+                <button ng-if="single.use == 1 && single.type != 2&&single.type != 4" type="button" class="btn btn-danger btn-sm" ng-click="uDeviceUse(single._id.$id,single.use)"><span class="glyphicon glyphicon-off">禁用</span></button>
+
+                <button ng-if="single.type != 2" type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#upd_{{single._id.$id}}"><span class="glyphicon glyphicon-edit">修改</span></button>
+
+                <div class="modal fade" id="upd_{{single._id.$id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">当前设备ID：{{single.ID}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h4>请输入新的设备self_id</h4>
+                                <input class="form-control" ng-model="single.self_id" id="{{single._id.$id}}_self_id">
+
+
+                                <h4>请输入新的设备名</h4>
+                                <input class="form-control" ng-model="single.name" id="{{single._id.$id}}_name">
+
+                                <h4>设备是否可控</h4>
+                                <select class="form-control" ng-model="single.control"  name="class" id="{{single._id.$id}}_control" ng-options="single.type as single.name for single in deviceControl">
+                                </select>
+
+                                <h4>请选择新的设备类型</h4>
+                                <select class="form-control" ng-model="single.type"  name="class" id="{{single._id.$id}}_type" ng-options="single.type as single.name for single in deviceTypes">
+                                </select>
+
+                                <h4>请选择新的设备入口</h4>
+                                <select class="form-control" ng-model="single.device_entrance.$id" id="{{single._id.$id}}_entrance"  ng-options="single._id.$id as single.name for single in deviceEntrances">
+                                </select>
+
+
+
+                                <h4>请输入新的设备说明</h4>
+                                <textarea class="form-control" rows="3"  ng-model="single.intro" id="{{single._id.$id}}_intro">{{single.intro}}</textarea>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button  class="btn btn-danger btn-sm" type="submit" ng-click="updateDevice(single._id.$id)">提交</button>
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <button ng-if="single.type != 2" type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#del_{{single._id.$id}}"><span class="glyphicon glyphicon-trash">删除</span></button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="del_{{single._id.$id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">警告！</h4>
+                            </div>
+                            <div class="modal-body">
+                                将要删除该设备！
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-sm" ng-click="deleteDevice(single._id.$id)">删除</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--<button ng-if="single.control == 1 && single.type != 2" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#control_{{single._id.$id}}"><span class="glyphicon glyphicon-edit">控制设备</span></button>-->
+
+                <div class="modal fade" id="control_{{single._id.$id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">当前设备ID：{{single._id.$id}}</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <h4>请选择设备指令</h4>
+                                <select class="form-control" ng-model="oder" ng-options="single.type as single.name for single in orders">
+                                </select>
+                                <h4>配置数据</h4>
+                                <input class="form-control" ng-model="config">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button  class="btn btn-danger btn-sm" type="submit" ng-click="control(single._id.$id)">提交</button>
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </td>
+        </tr>
+
+    </table>
+
+    <nav>
+        当前第 {{ selectPage.page.nowPage }} 页 | 总计 {{ selectPage.page.totalPage }} 页
+        <ul class="pager">
+            <li><a ng-if="selectPage.page.nowPage>1"
+                   href="" ng-click="selectPage.previousPage()">前一页</a></li>
+
+            <li><a ng-if="selectPage.page.nowPage<selectPage.page.totalPage"
+                   href="" ng-click="selectPage.nextPage()">下一页</a></li>
+        </ul>
+    </nav>
+
+</div>
+
+
+
+
+
+
+

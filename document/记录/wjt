@@ -1,0 +1,4 @@
+Commodity标签删除增加未测试
+程序中统一用string的id 就是$this->id
+存入数据库时统一用Object的id 也就是$this->_id
+查询时会自动转换id到对象型 如果你需要相关id 也可以使用$this->info["_id"]获得

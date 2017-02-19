@@ -1,0 +1,75 @@
+.opa
+{
+    opacity: 0.9 !important;
+}
+
+/* 动画二start */
+.loading-2 i{
+
+    display: inline-block;
+    width: 4px;
+    height: 35px;
+    border-radius: 2px;
+    margin: 0 2px;
+    background-color: #9CCE8E;
+}
+.loading-2 i:nth-child(1)   /* loading-2下的第一个i    */
+{
+    animation: loading-2 1s ease-in 0.1s infinite;;
+    -webkit-animation:loading-2 1s ease-in 0.1s infinite;  /*调用动画函数loading-2 播放时间1s 缓动效果ease-in 延迟时间0.1s 播放次数：infinite(循环播放) */
+    -moz-animation: loading-2 1s ease-in 0.1s infinite;
+    -o-animation: loading-2 1s ease-in 0.1s infinite;
+}
+.loading-2 i:nth-child(2)   /* loading-2下的第一个i    */
+{
+    animation:loading-2 1s ease-in 0.2s infinite;
+    -webkit-animation:loading-2 1s ease-in 0.2s infinite;  /*调用动画函数loading-2 播放时间1s 缓动效果ease-in 延迟时间0.1s 播放次数：infinite(循环播放)  */
+    -moz-animation:loading-2 1s ease-in 0.2s infinite;
+    -o-animation:loading-2 1s ease-in 0.2s infinite;
+}
+.loading-2 i:nth-child(3)   /* loading-2下的第一个i    */
+{
+    animation:loading-2 1s ease-in 0.3s infinite;
+    -webkit-animation:loading-2 1s ease-in 0.3s infinite;  /*调用动画函数loading-2 播放时间1s 缓动效果ease-in 延迟时间0.1s 播放次数：infinite(循环播放)  */
+    -moz-animation: loading-2 1s ease-in 0.3s infinite;
+    -o-animation: loading-2 1s ease-in 0.3s infinite;
+}
+.loading-2 i:nth-child(4)   /* loading-2下的第一个i    */
+{
+    animation: loading-2 1s ease-in 0.4s infinite;;
+    -webkit-animation:loading-2 1s ease-in 0.4s infinite;  /*调用动画函数loading-2 播放时间1s 缓动效果ease-in 延迟时间0.1s 播放次数：infinite(循环播放)  */
+    -moz-animation: loading-2 1s ease-in 0.4s infinite;
+   -o-animation: loading-2 1s ease-in 0.4s infinite;
+}
+.loading-2 i:nth-child(5)   /* loading-2下的第一个i    */
+{
+    animation:loading-2 1s ease-in 0.5s infinite;
+    -webkit-animation:loading-2 1s ease-in 0.5s infinite;  /*调用动画函数loading-2 播放时间1s 缓动效果ease-in 延迟时间0.1s 播放次数：infinite(循环播放)  */
+    -moz-animation: loading-2 1s ease-in 0.5s infinite;
+    -o-animation: loading-2 1s ease-in 0.5s infinite;
+}
+
+@-webkit-keyframes loading-2  /* 定义 loading-2 动画函数  */
+{
+    0% {transform: scaleY(1);}    /*transform(变换)中的scaleY(缩放倍数)（沿y轴缩放） */
+    50% {transform: scaleY(0.4); }
+    100% {transform: scaleY(1); }
+}
+@keyframes  loading-2{
+    0% {transform: scaleY(1);}    /*transform(变换)中的scaleY(缩放倍数)（沿y轴缩放） */
+    50% {transform: scaleY(0.4); }
+    100% {transform: scaleY(1); }
+}
+
+@-o-keyframes loading-2 {
+    0% {transform: scaleY(1);}    /*transform(变换)中的scaleY(缩放倍数)（沿y轴缩放） */
+    50% {transform: scaleY(0.4); }
+    100% {transform: scaleY(1); }
+}
+@-moz-keyframes loading-2 {
+    0% {transform: scaleY(1);}    /*transform(变换)中的scaleY(缩放倍数)（沿y轴缩放） */
+    50% {transform: scaleY(0.4); }
+    100% {transform: scaleY(1); }
+}
+
+/* 动画二end */

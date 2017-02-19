@@ -1,0 +1,139 @@
+<div id="sPayment_index">
+    <div class="col-sm-12">
+        <nav class="pull-right">
+            <ul class="pagination">
+                <li>
+                    <a ng-click="selectPage.getLastData()"
+                       ng-if="selectPage.lastCache.length>0" aria-label="Previous">
+                        <span class="glyphicon glyphicon-chevron-left"  aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li>
+                    <a  ng-click="selectPage.getNextData()" aria-label="Next"
+                        ng-if="selectPage.nextCache.length>0">
+                        <span class="glyphicon glyphicon-chevron-right"  aria-hidden="true"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <h2>查看入口 | <button class="btn  btn-success"  data-toggle="modal" data-target="#aEntrance" type="button">添加入口</button></h2>
+        <div class="modal fade" id="aEntrance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" >添加入口</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>入口名</h4>
+                        <input type="text "  class="form-control" ng-model="entrance_name" placeholder="entrance name">
+
+                        <h4>入口登录名</h4>
+                        <input type="text"  class="form-control"  ng-model="entrance_login_name" placeholder="entrance login name">
+
+                        <h4>入口登录密码</h4>
+                        <input type="password"  class="form-control"  ng-model="entrance_password" placeholder="entrance login password">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-primary" type="submit" data-dismiss="modal" ng-click="addEntrance()">提交</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <table class="table table-hover table-bordered">
+
+        <tr class="container">
+            <th><span class="glyphicon glyphicon-tag">  ID</span></th>
+            <th><span class="glyphicon glyphicon-leaf">  入口名</span></th>
+            <th><span class="glyphicon glyphicon-ok-sign">  入口登录名</span></th>
+            <th><span class="glyphicon glyphicon-cog">  操作</span></th>
+        </tr>
+        <tr class="container" ng-repeat="single in selectPage.data">
+            <td class="container">{{single.ID}}</td>
+            <td class="container">{{single.name}}</td>
+            <td class="container">{{single.login_name}}</td>
+            <td class="container"><!-- Button trigger modal -->
+
+
+                <a type="button" href="/admin_entrance_manage#/manage_entrance_device/{{single._id.$id}}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-search">查看设备</span></a>
+                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#upd_{{single._id.$id}}"><span class="glyphicon glyphicon-edit">修改</span></button>
+
+                <div class="modal fade" id="upd_{{single._id.$id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">当前入口ID：{{single.ID}}</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <h4>请输入新的入口名</h4>
+                                <input type="text "  class="form-control" ng-model="single.name" id="{{single._id.$id}}_name">
+
+                                <h4>请输入新的入口登录名</h4>
+                                <input type="text"  class="form-control"  ng-model="single.login_name" id="{{single._id.$id}}_login_name">
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button  class="btn btn-danger btn-sm" type="submit" ng-click="updateEntrance(single._id.$id)">提交</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#del_{{single._id.$id}}"><span class="glyphicon glyphicon-trash">删除</span></button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="del_{{single._id.$id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">警告！</h4>
+                            </div>
+                            <div class="modal-body">
+                                将要删除该入口！
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-sm" ng-click="deleteEntrance(single._id.$id)">删除</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </td>
+        </tr>
+
+    </table>
+
+    <nav>
+        当前第 {{ selectPage.page.nowPage }} 页 | 总计 {{ selectPage.page.totalPage }} 页
+        <ul class="pager">
+            <li><a ng-if="selectPage.page.nowPage>1"
+                   href="" ng-click="selectPage.previousPage()">前一页</a></li>
+
+            <li><a ng-if="selectPage.page.nowPage<selectPage.page.totalPage"
+                   href="" ng-click="selectPage.nextPage()">下一页</a></li>
+        </ul>
+    </nav>
+
+</div>
+
+
+
+
+
+
+

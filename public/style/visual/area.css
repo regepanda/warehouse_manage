@@ -1,0 +1,92 @@
+/* 坐标轴样式 */
+.axis path,
+.axis line{
+    fill: none;
+    stroke: gray; /* 线条颜色 */
+    shape-rendering: crispEdges;
+    stroke-width: 2;  /* 线条，刻度宽度 */
+}
+
+.axis text {
+    font-family: 微软雅黑;
+
+    font-size: 15px;
+}
+/* 坐标样式 */
+
+/*id = container 格式 */
+/* 湿度*/
+#container
+{
+  /*  background-color: #ddd; */
+    width: 90%;
+    height: 800px;
+    position: relative;
+
+    margin-left: 3%;
+
+  /*  border:1px solid black; */
+}
+
+/* 湿度 */
+#container_humidity
+{
+    /* background-color: #ddd; */
+    width: 90%;
+    height: 700px;
+    position: relative;
+
+    margin-left: 3%;
+
+ /*   border:1px solid black; */
+}
+
+/*曲线样式*/
+path
+{
+    fill:none;  /*不填充 */
+    stroke:#1DE9B6;   /* 线条颜色 */
+    stroke-width: 2;  /* 线条宽度 */
+
+}
+/*曲线样式*/
+
+/*样式*/
+.domain, .tick line
+{
+    stroke:gray;
+}
+
+/*样式*/
+
+/*区域  */
+#container_area
+{
+  /* background-color: #ddd; */
+    width: 90%;
+    height: 55%;
+
+    position: relative;
+    left: 3%;
+
+
+   /* border:1px solid black; */
+}
+
+
+.second {
+    fill: blue;
+
+    border: 1px solid blueviolet;
+}
+
+/* 画布 */
+svg
+{
+   /* border: 1px solid blueviolet; */
+}
+rect
+{
+    /* border: 1px solid blueviolet; */
+}
+/*   */

@@ -1,0 +1,12 @@
+__开头的都是一些全局组件
+基本的提示信息组件：__component_messageBar (位于lib/component.blade.php)直接包含即可
+    js中使用：
+        调用__component_messageBar_open() __component_messageBar_close()开关效果
+        更改文本使用 __setMessage()即可
+    php中使用：
+        Route::get("/test",function(\MyClass\Base\GuiFunction $gui){
+            $gui->setMessage(false,"错误！！");
+        });
+
+
+

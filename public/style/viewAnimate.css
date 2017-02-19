@@ -1,0 +1,65 @@
+
+#pageView.ng-enter
+{
+    animation: 0.5s zoomIn;
+    -webkit-animation: 0.3s zoomIn ;
+}
+
+.animate_item.ng-enter
+{
+    animation: 0.5s zoomIn;
+    -webkit-animation: 0.3s zoomIn ;
+}
+.animate_item.ng-enter-stagger
+{
+    animation-delay: 50ms;
+    -webkit-animation-delay:50ms;
+
+    animation-duration: 0;
+    -webkit-animation-duration: 0;
+}
+
+.animate_component.ng-enter
+{
+    animation: 0.5s zoomIn;
+    -webkit-animation: 0.3s zoomIn ;
+}
+.animate_component.ng-leave
+{
+    animation: 0.5s zoomOut;
+    -webkit-animation: 0.3s zoomOut ;
+}
+/*#pageView.ng-leave
+{
+    animation:0.1s fadeOutUp;
+    -webkit-animation: 0.1s fadeOutUp;
+
+}*/
+/*
+#sRequestView.ng-leave-stagger
+{
+    -webkit-animation-delay: 600ms;
+    animation-delay: 600ms;
+
+    animation:0.5s zoomOut ;
+    -webkit-animation: 0.5s zoomOut ;
+
+    animation-duration:1s;
+    -webkit-animation-duration: 1s;
+
+}
+ #sRequestView.ng-enter-stagger
+{
+    -webkit-animation-delay: 2s;
+    animation-delay:2s;
+
+    animation:1s fadeInUp ;
+    -webkit-animation: 1s fadeInUp ;
+
+    animation-duration:0s;
+    -webkit-animation-duration: 0s;
+
+}*/
+
+
+

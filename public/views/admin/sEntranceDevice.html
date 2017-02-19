@@ -1,0 +1,60 @@
+<div id="sPayment_index">
+    <div class="col-sm-12">
+        <h2>查看入口设备 | 当前入口：{{entrance_id}} </h2>
+    </div>
+    <div ng-if="entranceDevices == null" class="col-sm-12">
+         <h2>此入口暂无设备</h2>
+     </div>
+
+    <table ng-if="entranceDevices != null" class="table table-hover table-bordered">
+
+        <tr class="container">
+            <th><span class="glyphicon glyphicon-tag">  ID</span></th>
+            <th><span class="glyphicon glyphicon-eye-open">  设备self_id</span></th>
+            <th><span class="glyphicon glyphicon-leaf">  设备名</span></th>
+            <th><span class="glyphicon glyphicon-lock">  设备类型</span></th>
+            <th><span class="glyphicon glyphicon-lock">  设备状态</span></th>
+            <th><span class="glyphicon glyphicon-lock">  设备介绍</span></th>
+            <th><span class="glyphicon glyphicon-lock">  操作</span></th>
+        </tr>
+        <tr class="container" ng-repeat="single in entranceDevices">
+            <td class="container">{{single._id.$id}}</td>
+            <td class="container">{{single.self_id}}</td>
+            <td class="container">{{single.name}}</td>
+            <td class="container">{{keywordDeviceTypeMap[single.type]}}</td>
+            <td class="container">{{keywordDeviceUseMap[single.use]}}</td>
+            <td class="container">{{single.intro}}</td>
+            <td class="container">
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#del_{{single._id.$id}}"><span class="glyphicon glyphicon-trash">移除</span></button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="del_{{single._id.$id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">警告！</h4>
+                            </div>
+                            <div class="modal-body">
+                                将要移除该入口设备！
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-danger btn-sm" ng-click="removeEntranceDevice(single._id.$id)">移除</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+
+
+
+
+
+
